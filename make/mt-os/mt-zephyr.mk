@@ -34,7 +34,7 @@ IOTC_INCLUDE_FLAGS += -I$(ZEPHYR_BASE)/include
 
 IOTC_BSP_TLS_BUILD_ARGS = -m32
 #  sys/types.h
-IOTC_INCLUDE_FLAGS += -I$(ZEPHYR_BASE)/include/posix
+#IOTC_INCLUDE_FLAGS += -I$(ZEPHYR_BASE)/include/posix
 #  IOTC_INCLUDE_FLAGS += -I$(ZEPHYR_BASE)/lib/libc/minimal/include
 
 IOTC_INCLUDE_FLAGS += -I$(ZEPHYR_BASE)/arch/posix/include
