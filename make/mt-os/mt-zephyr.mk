@@ -70,9 +70,8 @@ IOTC_ZEPHYR_PREREQUISITE_AUTOCONF = $(IOTC_ZEPHYR_EXAMPLE_PATH)/build/zephyr/inc
 $(IOTC_ZEPHYR_README_PATH):
 	@echo "IOTC Zephyr build: git clone Zephyr repository to $(dir $@)"
 	@git clone https://github.com/zephyrproject-rtos/zephyr $(dir $@)
-	@git -C $(dir $@) checkout 6798a421e1
+	@git -C $(dir $@) checkout 4e4048fadf78fcc270be8280c3f687b362f29dd5
 	@git -C $(dir $@) apply $(IOTC_THIRD_PARTY_DIR)/iotc_zephyr_dtc_version.patch
-	@git -C $(dir $@) apply $(IOTC_THIRD_PARTY_DIR)/0001-net-socket-Add-zsock_freeaddrinfo.patch
 
 export ZEPHYR_TOOLCHAIN_VARIANT = zephyr
 export ZEPHYR_BASE = $(IOTC_THIRD_PARTY_DIR)/zephyr
