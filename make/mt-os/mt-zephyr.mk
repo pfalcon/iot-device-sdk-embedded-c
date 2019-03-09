@@ -17,7 +17,6 @@ CC ?= gcc
 AR ?= ar
 
 IOTC_C_FLAGS += -fPIC -m32
-IOTC_C_FLAGS += -imacros autoconf.h
 
 IOTC_LIB_FLAGS += $(IOTC_TLS_LIBFLAGS) -lpthread -lm -lcrypto
 
@@ -26,22 +25,14 @@ IOTC_ZEPHYR_BSP_PATH = $(IOTC_ZEPHYR_INTEGRATION_PATH)/zephyr_bsp
 IOTC_ZEPHYR_EXAMPLE_PATH = $(IOTC_ZEPHYR_INTEGRATION_PATH)/zephyr_native_posix
 
 # add Zephyr BSP files manually
-IOTC_SOURCES += $(wildcard $(IOTC_ZEPHYR_BSP_PATH)/*.c)
+#IOTC_SOURCES += $(wildcard $(IOTC_ZEPHYR_BSP_PATH)/*.c)
 
 include make/mt-os/mt-os-common.mk
-
-IOTC_INCLUDE_FLAGS += -I$(ZEPHYR_BASE)/include
 
 IOTC_BSP_TLS_BUILD_ARGS = -m32
 #  sys/types.h
 #IOTC_INCLUDE_FLAGS += -I$(ZEPHYR_BASE)/include/posix
 #  IOTC_INCLUDE_FLAGS += -I$(ZEPHYR_BASE)/lib/libc/minimal/include
-
-IOTC_INCLUDE_FLAGS += -I$(ZEPHYR_BASE)/arch/posix/include
-IOTC_INCLUDE_FLAGS += -I$(ZEPHYR_BASE)/soc/posix/inf_clock
-IOTC_INCLUDE_FLAGS += -I$(ZEPHYR_BASE)/boards/posix/native_posix
-
-IOTC_INCLUDE_FLAGS += -I$(IOTC_ZEPHYR_EXAMPLE_PATH)/build/zephyr/include/generated
 
 IOTC_ARFLAGS += -rs -c $(XI)
 
