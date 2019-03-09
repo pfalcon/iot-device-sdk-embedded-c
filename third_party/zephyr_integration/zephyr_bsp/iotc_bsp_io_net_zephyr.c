@@ -181,15 +181,15 @@ iotc_bsp_io_net_close_socket(iotc_bsp_socket_t* iotc_socket) {
   return IOTC_BSP_IO_NET_STATE_OK;
 }
 
-#define FD_SET(socket, event, pollfd)                                          \
+#define _FD_SET(socket, event, pollfd)                                          \
   pollfd.fd = socket;                                                          \
   pollfd.events |= event;
-#define FD_ISSET(event, pollfd) (pollfd.revents | event)
+#define _FD_ISSET(event, pollfd) (pollfd.revents | event)
 
 iotc_bsp_io_net_state_t
 iotc_bsp_io_net_select(iotc_bsp_socket_events_t* socket_events_array,
                        size_t socket_events_array_size, long timeout_sec) {
-  struct pollfd fds[1]; // note: single socket support
+  struct zsock_pollfd fds[1]; // note: single socket support
 
   /* translate the library socket events settings to the event sets used by
    * Zephyr poll mechanism
@@ -204,16 +204,16 @@ iotc_bsp_io_net_select(iotc_bsp_socket_events_t* socket_events_array,
     }
 
     if (1 == socket_events->in_socket_want_read) {
-      FD_SET(socket_events->iotc_socket, ZSOCK_POLLIN, fds[0]);
+      _FD_SET(socket_events->iotc_socket, ZSOCK_POLLIN, fds[0]);
     }
 
     if ((1 == socket_events->in_socket_want_write) ||
         (1 == socket_events->in_socket_want_connect)) {
-      FD_SET(socket_events->iotc_socket, ZSOCK_POLLOUT, fds[0]);
+      _FD_SET(socket_events->iotc_socket, ZSOCK_POLLOUT, fds[0]);
     }
 
     if (1 == socket_events->in_socket_want_error) {
-      FD_SET(socket_events->iotc_socket, ZSOCK_POLLERR, fds[0]);
+      _FD_SET(socket_events->iotc_socket, ZSOCK_POLLERR, fds[0]);
     }
   }
 
@@ -225,11 +225,11 @@ iotc_bsp_io_net_select(iotc_bsp_socket_events_t* socket_events_array,
     for (socket_id = 0; socket_id < socket_events_array_size; ++socket_id) {
       iotc_bsp_socket_events_t* socket_events = &socket_events_array[socket_id];
 
-      if (FD_ISSET(ZSOCK_POLLIN, fds[0])) {
+      if (_FD_ISSET(ZSOCK_POLLIN, fds[0])) {
         socket_events->out_socket_can_read = 1;
       }
 
-      if (FD_ISSET(ZSOCK_POLLOUT, fds[0])) {
+      if (_FD_ISSET(ZSOCK_POLLOUT, fds[0])) {
         if (1 == socket_events->in_socket_want_connect) {
           socket_events->out_socket_connect_finished = 1;
         }
@@ -239,7 +239,7 @@ iotc_bsp_io_net_select(iotc_bsp_socket_events_t* socket_events_array,
         }
       }
 
-      if (FD_ISSET(ZSOCK_POLLERR, fds[0])) {
+      if (_FD_ISSET(ZSOCK_POLLERR, fds[0])) {
         socket_events->out_socket_error = 1;
       }
     }
