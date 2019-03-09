@@ -14,25 +14,15 @@
  */
 
 #include <iotc_bsp_time.h>
-
-#include <stddef.h>
-#include <time.h>
+#include <zephyr.h>
 
 void iotc_bsp_time_init() { /* empty */
 }
 
 iotc_time_t iotc_bsp_time_getcurrenttime_seconds() {
-  struct timeval current_time;
-  gettimeofday(&current_time, NULL);
-  return (iotc_time_t)((current_time.tv_sec) +
-                       (current_time.tv_usec + 500000) /
-                           1000000); /* round the microseconds to seconds */
+  return (k_uptime_get() + (MSEC_PER_SEC/2)) / MSEC_PER_SEC;
 }
 
 iotc_time_t iotc_bsp_time_getcurrenttime_milliseconds() {
-  struct timeval current_time;
-  gettimeofday(&current_time, NULL);
-  return (iotc_time_t)((current_time.tv_sec * 1000) +
-                       (current_time.tv_usec + 500) /
-                           1000); /* round the microseconds to milliseconds */
+  return k_uptime_get();
 }
