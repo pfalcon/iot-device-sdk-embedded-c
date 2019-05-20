@@ -53,3 +53,18 @@ target_link_libraries(app PUBLIC ${IOTC_MBEDTLS_LIB_PATH}/libmbedcrypto.a)
 
 # wolfssl, disabled since wolfssl fails to build with -m32 flag (--enable-32bit)
 #  target_link_libraries(app PUBLIC ${IOTC_PATH}/third_party/tls/wolfssl/src/.libs/libwolfssl.a)
+
+
+zephyr_get_include_directories_for_lang_as_string(C includes)
+zephyr_get_system_include_directories_for_lang_as_string(C system_includes)
+zephyr_get_compile_definitions_for_lang_as_string(C definitions)
+zephyr_get_compile_options_for_lang_as_string(C options)
+
+add_custom_target(
+  outputexports
+  COMMAND echo CC="${CMAKE_C_COMPILER}"
+  COMMAND echo AR="${CMAKE_AR}"
+  COMMAND echo Z_CFLAGS=${system_includes} ${includes} ${definitions} ${options}
+  VERBATIM
+  USES_TERMINAL
+)
