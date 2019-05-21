@@ -23,6 +23,8 @@
 #include "iotc_macros.h"
 #include "iotc_memory_limiter.h"
 
+#undef IOTC_PLATFORM_BASE_POSIX
+
 #ifdef IOTC_PLATFORM_BASE_POSIX
 #include <execinfo.h>
 #endif
