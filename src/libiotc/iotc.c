@@ -458,7 +458,7 @@ iotc_state_t iotc_connect_to(iotc_context_handle_t iotc_h, const char* host,
 
   new_backoff = iotc_get_backoff_penalty();
 
-  iotc_debug_format("new backoff value: %d", new_backoff);
+  iotc_debug_format("new backoff value: %u", (unsigned)new_backoff);
 
   /* Register the execution in next init. */
   state = iotc_evtd_execute_in(
