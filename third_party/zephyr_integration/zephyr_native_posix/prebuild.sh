@@ -16,7 +16,7 @@ pip3 install --user pyelftools
 
 mkdir -p build; cd build;
 
-cmake -DBOARD=native_posix ..
+cmake -DBOARD=qemu_x86 ..
 
 make --no-print-directory outputexports CMAKE_COMMAND=: >Makefile.export
 make zephyr/include/generated/autoconf.h
