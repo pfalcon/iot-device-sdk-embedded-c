@@ -20,6 +20,8 @@ project(zephyr_native_posix)
 set(IOTC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 set(IOTC_BSP_DIR ${IOTC_PATH}/third_party/zephyr_integration/zephyr_bsp)
 
+target_include_directories(app PRIVATE $ENV{ZEPHYR_BASE}/include/posix)
+
 target_include_directories(app PRIVATE ${IOTC_PATH}/examples/common/src)
 target_include_directories(app PRIVATE ${IOTC_PATH}/include)
 target_include_directories(app PRIVATE ${IOTC_PATH}/include/bsp)
@@ -31,7 +33,8 @@ target_include_directories(app PRIVATE ${IOTC_PATH}/third_party/tls/mbedtls/incl
 
 target_sources(app PRIVATE
 	src/main.c
-	${IOTC_PATH}/examples/common/src/commandline.c
+	src/config.c
+#	${IOTC_PATH}/examples/common/src/commandline.c
 	${IOTC_PATH}/examples/common/src/example_utils.c
 	${IOTC_BSP_DIR}/iotc_bsp_io_fs_zephyr.c
 	${IOTC_BSP_DIR}/iotc_bsp_io_net_zephyr.c
@@ -46,10 +49,10 @@ add_definitions(-DIOTC_TLS_LIB_MBEDTLS)
 target_link_libraries(app PUBLIC ${IOTC_PATH}/bin/zephyr/libiotc.a)
 
 # mbedTLS
-set(IOTC_MBEDTLS_LIB_PATH ${IOTC_PATH}/third_party/tls/mbedtls/library)
-target_link_libraries(app PUBLIC ${IOTC_MBEDTLS_LIB_PATH}/libmbedtls.a)
-target_link_libraries(app PUBLIC ${IOTC_MBEDTLS_LIB_PATH}/libmbedx509.a)
-target_link_libraries(app PUBLIC ${IOTC_MBEDTLS_LIB_PATH}/libmbedcrypto.a)
+#set(IOTC_MBEDTLS_LIB_PATH ${IOTC_PATH}/third_party/tls/mbedtls/library)
+#target_link_libraries(app PUBLIC ${IOTC_MBEDTLS_LIB_PATH}/libmbedtls.a)
+#target_link_libraries(app PUBLIC ${IOTC_MBEDTLS_LIB_PATH}/libmbedx509.a)
+#target_link_libraries(app PUBLIC ${IOTC_MBEDTLS_LIB_PATH}/libmbedcrypto.a)
 
 # wolfssl, disabled since wolfssl fails to build with -m32 flag (--enable-32bit)
 #  target_link_libraries(app PUBLIC ${IOTC_PATH}/third_party/tls/wolfssl/src/.libs/libwolfssl.a)
