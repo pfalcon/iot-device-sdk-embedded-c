@@ -1,3 +1,36 @@
+# WIP port of Google Cloud IoT Device SDK to Zephyr
+
+This port is concerned with making changes to build Google Cloud IoT
+Device SDK for "real" Zephyr targets, whereas currently upstream
+supports building only for "native_posix" target, which is auxiliary
+debugging target, not suitable or intended for production usage.
+
+Branch structure:
+
+* `zephyr-pfalcon-realhw` is based (and rebased) on `zephyr-pfalcon`
+* `zephyr-pfalcon` is based on https://github.com/galak/iot-device-sdk-embedded-c/tree/zephyr
+* Specific base of `galak/zephyr` is not exactly known, the whole project
+  should be re-made against upstream `development` branch.
+
+Build instructions:
+
+* Generate certificate and private key as described in existing documentation.
+* Configure things on Google Cloud IoT side.
+* In `third_party/zephyr_integration/zephyr_native_posix/src`, copy `config.c.in` to
+  `config.c`, edit it to set your device name and private key (be careful to include
+  `\n` at the end of each line of PEM private key encoded as a C string).
+* Until changes required on Zephyr side are merged, use branch
+  https://github.com/pfalcon/zephyr/tree/googleiot
+* Make a symlink to the above Zephyr tree as `third_party/zephyr`.
+* Initialize Zephyr development as usual (per its docs).
+* Use `MAKE-zephyr.sh` to build.
+* Go to `third_party/zephyr_integration/zephyr_native_posix/build` and issue
+  `make run` to run in QEMU (you'll need standard qemu_x86 networking setup,
+  including access to Internet,
+  [as described in Zephyr docs](https://docs.zephyrproject.org/latest/guides/networking/qemu_setup.html)).
+* To rebuild from scratch, run `CLEAN.sh` to clean previous stuff.
+
+---
 # Google Cloud IoT Device SDK for Embedded C
 
 The Google Cloud IoT Device SDK for Embedded C is an easy-to-port, open-source C library that connects low-end IoT devices to Google Cloud IoT Core.
