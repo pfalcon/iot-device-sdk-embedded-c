@@ -1,0 +1,18 @@
+#include "iotc.h"
+
+const char* iotc_project_id = "macro-precinct-211108";
+
+// Set your device name
+const char* iotc_device_path = "projects/macro-precinct-211108/locations/us-central1/registries/agross-registry/devices/pfalcon-test-device";
+// Set your device name
+const char* iotc_publish_topic = "/devices/pfalcon-test-device/state";
+const char* iotc_publish_message = "Hello from Zephyr!";
+const char* iotc_private_key_filename = "(none)";
+const char* iotc_private_key_pem =
+"-----BEGIN EC PRIVATE KEY-----\n"
+"use\n"
+"your\n"
+"key\n"
+"-----END EC PRIVATE KEY-----\n";
+
+iotc_mqtt_qos_t iotc_example_qos = IOTC_MQTT_QOS_AT_LEAST_ONCE;
