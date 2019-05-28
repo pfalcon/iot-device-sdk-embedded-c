@@ -15,7 +15,7 @@
 
 #include <iotc_bsp_io_net.h>
 
-typedef int32_t ssize_t;
+#include <sys/types.h>
 
 #include <fcntl.h>
 #include <net/socket.h>
